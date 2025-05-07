@@ -6,6 +6,7 @@ import Section from "./components/Section/Section";
 import style from "./App.module.css";
 
 import { FaAddressBook } from "react-icons/fa";
+import SearchBox from "./components/SearchBox/SearchBox";
 
 const defaultContacts = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -16,6 +17,26 @@ const defaultContacts = [
 
 function App() {
   const [contacts, setContacts] = useState(defaultContacts);
+  const [query, setQuery] = useState("");
+
+  const handleInput = (event) => {
+    const rawValue = event.target.value;
+
+    const filteredValue = rawValue
+      .replace(/[^a-zA-Zа-яА-ЯґҐєЄіІїЇʼ' ]/g, "")
+      .replace(/['ʼ]{2,}/g, "'")
+      .replace(/\s{2,}/g, " ")
+      .trim()
+      .toLowerCase();
+
+    setQuery(filteredValue);
+  };
+
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(query)
+  );
+  console.log("🚀 ~ filteredContacts:", filteredContacts);
+
   return (
     <>
       <Section>
@@ -29,7 +50,9 @@ function App() {
 
       <Section>
         <Container>
-          <h1>Phonebook</h1>
+          <SearchBox value={query} onInput={handleInput}>
+            Find contacts by name
+          </SearchBox>
         </Container>
       </Section>
 
@@ -41,7 +64,7 @@ function App() {
 
       <Section>
         <Container>
-          <ContactList contacts={contacts} />
+          <ContactList contacts={filteredContacts} />
         </Container>
       </Section>
     </>
