@@ -49,7 +49,6 @@ function App() {
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(query)
   );
-  console.log("🚀 ~ filteredContacts:", filteredContacts);
 
   return (
     <>

@@ -2,6 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+
+  height: 100%;
+
   border: 2px solid #666;
   border-radius: 8px;
   padding: 16px;
@@ -20,6 +24,8 @@
 }
 
 .icon {
+  flex-shrink: 0;
+
   color: #666;
 }
 

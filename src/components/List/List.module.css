@@ -1,14 +1,17 @@
 .list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 16px;
 
+  grid-template-columns: 1fr;
+
   @media (min-width: 768px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: repeat(2, 310px);
+    justify-content: center;
   }
 
   @media (min-width: 1440px) {
+    grid-template-columns: repeat(3, 380px);
+    justify-content: center;
+    gap: 24px;
   }
 }
