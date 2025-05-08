@@ -1,9 +1,8 @@
-import React from "react";
-
 import { FaPhone } from "react-icons/fa6";
 import { BsFillPersonFill } from "react-icons/bs";
 
 import styles from "./Contact.module.css";
+import Button from "../Button/Button";
 
 const Contact = ({ data }) => {
   return (
@@ -18,9 +17,9 @@ const Contact = ({ data }) => {
           <p className={styles.number}>{data.number}</p>
         </div>
       </div>
-      <button type="button" className={styles.button}>
+      <Button type="button" className={styles.button} style={"red"}>
         Delete
-      </button>
+      </Button>
     </div>
   );
 };

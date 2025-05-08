@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
+import toast from "react-hot-toast";
 import "./App.module.css";
 import ContactList from "./components/ContactList/ContactList";
 import Container from "./components/Container/Container";
@@ -7,6 +9,7 @@ import style from "./App.module.css";
 
 import { FaAddressBook } from "react-icons/fa";
 import SearchBox from "./components/SearchBox/SearchBox";
+import ContactForm from "./components/ContactForm/ContactForm";
 
 const defaultContacts = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -18,6 +21,17 @@ const defaultContacts = [
 function App() {
   const [contacts, setContacts] = useState(defaultContacts);
   const [query, setQuery] = useState("");
+
+  const addContact = (data) => {
+    if (contacts.find((contact) => contact.name === data.name)) {
+      toast.error("This user is already in your Phonebook!");
+      return;
+    }
+
+    data.id = nanoid();
+
+    setContacts([...contacts, data]);
+  };
 
   const handleInput = (event) => {
     const rawValue = event.target.value;
@@ -50,15 +64,15 @@ function App() {
 
       <Section>
         <Container>
-          <SearchBox value={query} onInput={handleInput}>
-            Find contacts by name
-          </SearchBox>
+          <ContactForm addContact={addContact} />
         </Container>
       </Section>
 
       <Section>
         <Container>
-          <h1>Phonebook</h1>
+          <SearchBox value={query} onInput={handleInput}>
+            Find contacts by name
+          </SearchBox>
         </Container>
       </Section>
 

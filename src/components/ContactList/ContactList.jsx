@@ -1,4 +1,3 @@
-import React from "react";
 import Contact from "../Contact/Contact";
 import List from "../List/List";
 import ListItem from "../ListItem/ListItem";
