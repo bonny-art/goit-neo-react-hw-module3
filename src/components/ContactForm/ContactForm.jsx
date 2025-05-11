@@ -1,8 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+
 import Button from "../Button/Button";
-import styles from "./ContactForm.module.css";
 import InputField from "../InputField/InputField";
+
+import styles from "./ContactForm.module.css";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -22,8 +24,11 @@ const initialValues = {
 
 const ContactForm = ({ addContact }) => {
   const handleSubmit = (values, actions) => {
-    addContact(values);
-    actions.resetForm();
+    const success = addContact(values);
+
+    if (success) {
+      actions.resetForm();
+    }
   };
 
   return (

@@ -1,8 +1,9 @@
-import { FaPhone } from "react-icons/fa6";
 import { BsFillPersonFill } from "react-icons/bs";
+import { FaPhone } from "react-icons/fa6";
+
+import Button from "../Button/Button";
 
 import styles from "./Contact.module.css";
-import Button from "../Button/Button";
 
 const Contact = ({ data, deleteContact }) => {
   return (

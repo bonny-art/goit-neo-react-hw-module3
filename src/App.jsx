@@ -1,15 +1,20 @@
 import { useState } from "react";
+
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
-import "./App.module.css";
+import { FaAddressBook } from "react-icons/fa";
+
 import ContactList from "./components/ContactList/ContactList";
 import Container from "./components/Container/Container";
 import Section from "./components/Section/Section";
-import style from "./App.module.css";
-
-import { FaAddressBook } from "react-icons/fa";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactForm from "./components/ContactForm/ContactForm";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { hasContact } from "./utils/hasContact";
+import { getFilteredContacts } from "./utils/getFilteredContacts";
+
+import "./App.module.css";
+import style from "./App.module.css";
 
 const defaultContacts = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
@@ -19,28 +24,27 @@ const defaultContacts = [
 ];
 
 function App() {
-  const [contacts, setContacts] = useState(defaultContacts);
+  const [contacts, setContacts] = useLocalStorage("contacts", defaultContacts);
   const [query, setQuery] = useState("");
 
   const addContact = (data) => {
-    if (hasContact(data)) {
+    if (hasContact(contacts, data)) {
       toast.error("This user is already in your Phonebook!");
-      return;
+      return false;
     }
 
-    data.id = nanoid();
+    const newContact = {
+      ...data,
+      id: nanoid(),
+    };
 
-    setContacts([...contacts, data]);
+    setContacts([...contacts, newContact]);
+    toast.success("Contact added!");
+    return true;
   };
 
   const deleteContact = (id) => () => {
-    setContacts(contacts.filter((contact) => contact.id != id));
-  };
-
-  const hasContact = (data) => {
-    return contacts.find(
-      (contact) => contact.name.toLowerCase() === data.name.toLowerCase()
-    );
+    setContacts(contacts.filter((contact) => contact.id !== id));
   };
 
   const handleInput = (event) => {
@@ -56,9 +60,7 @@ function App() {
     setQuery(filteredValue);
   };
 
-  const filteredContacts = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(query)
-  );
+  const filteredContacts = getFilteredContacts(contacts, query);
 
   return (
     <>

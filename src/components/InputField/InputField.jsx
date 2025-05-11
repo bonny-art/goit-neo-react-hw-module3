@@ -1,6 +1,8 @@
-import { useField } from "formik";
-import styles from "./InputField.module.css";
 import { useId } from "react";
+
+import { useField } from "formik";
+
+import styles from "./InputField.module.css";
 
 const InputField = ({ label, ...props }) => {
   const [field, meta] = useField(props);

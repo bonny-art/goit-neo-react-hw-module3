@@ -1,5 +1,6 @@
-import s from "./ListItem.module.css";
+import style from "./ListItem.module.css";
+
 const ListItem = ({ children }) => {
-  return <li className={s.item}>{children}</li>;
+  return <li className={style.item}>{children}</li>;
 };
 export default ListItem;
