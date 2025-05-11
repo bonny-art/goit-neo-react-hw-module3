@@ -4,7 +4,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import styles from "./Contact.module.css";
 import Button from "../Button/Button";
 
-const Contact = ({ data }) => {
+const Contact = ({ data, deleteContact }) => {
   return (
     <div className={styles.card}>
       <div className={styles.info}>
@@ -17,7 +17,12 @@ const Contact = ({ data }) => {
           <p className={styles.number}>{data.number}</p>
         </div>
       </div>
-      <Button type="button" className={styles.button} style={"red"}>
+      <Button
+        type="button"
+        className={styles.button}
+        style={"red"}
+        onClick={deleteContact(data.id)}
+      >
         Delete
       </Button>
     </div>

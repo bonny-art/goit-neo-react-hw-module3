@@ -23,7 +23,7 @@ function App() {
   const [query, setQuery] = useState("");
 
   const addContact = (data) => {
-    if (contacts.find((contact) => contact.name === data.name)) {
+    if (hasContact(data)) {
       toast.error("This user is already in your Phonebook!");
       return;
     }
@@ -31,6 +31,16 @@ function App() {
     data.id = nanoid();
 
     setContacts([...contacts, data]);
+  };
+
+  const deleteContact = (id) => () => {
+    setContacts(contacts.filter((contact) => contact.id != id));
+  };
+
+  const hasContact = (data) => {
+    return contacts.find(
+      (contact) => contact.name.toLowerCase() === data.name.toLowerCase()
+    );
   };
 
   const handleInput = (event) => {
@@ -77,7 +87,10 @@ function App() {
 
       <Section>
         <Container>
-          <ContactList contacts={filteredContacts} />
+          <ContactList
+            contacts={filteredContacts}
+            deleteContact={deleteContact}
+          />
         </Container>
       </Section>
     </>
